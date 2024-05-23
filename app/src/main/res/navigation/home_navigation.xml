@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_navigation"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.hasanfilik.burc.home.fragments.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/commentsFragment"
+        android:name="com.hasanfilik.burc.home.fragments.comments.CommentsFragment"
+        android:label="fragment_comments"
+        tools:layout="@layout/fragment_comments" />
+    <fragment
+        android:id="@+id/compatibilityFragment"
+        android:name="com.hasanfilik.burc.home.fragments.compatibility.CompatibilityFragment"
+        android:label="fragment_compatibility"
+        tools:layout="@layout/fragment_compatibility" />
+    <fragment
+        android:id="@+id/dailyInfoFragment"
+        android:name="com.hasanfilik.burc.home.fragments.dailyInfo.DailyInfoFragment"
+        android:label="fragment_daily_info"
+        tools:layout="@layout/fragment_daily_info" />
+</navigation>

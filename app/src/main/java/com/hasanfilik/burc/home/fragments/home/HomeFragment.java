@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.hasanfilik.burc.databinding.FragmentHomeBinding;
+import com.hasanfilik.burc.horoscope_details.HoroscopeDetailsActivity;
+import com.hasanfilik.burc.model.horoscope.Horoscope;
 
 
 public class HomeFragment extends Fragment {
@@ -30,5 +33,10 @@ public class HomeFragment extends Fragment {
 
     private void initializeRecyclerView() {
         binding.getRoot().setAdapter(listAdapter);
+        listAdapter.setListener(this::onItemClick);
+    }
+
+    private void onItemClick(Horoscope data) {
+        HoroscopeDetailsActivity.launch(requireContext(), data);
     }
 }

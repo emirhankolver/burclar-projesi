@@ -4,21 +4,25 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hasanfilik.burc.databinding.ListItemHoroscopeBinding;
-import com.hasanfilik.burc.model.HomeListData;
+import com.hasanfilik.burc.model.horoscope.Horoscope;
 
 import java.util.ArrayList;
 
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
-    private final ArrayList<HomeListData> list = new ArrayList<>();
+    private final ArrayList<Horoscope> list = new ArrayList<>();
+    @Nullable
+    private Listener listener;
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return new ViewHolder(ListItemHoroscopeBinding.inflate(inflater, parent, false));
+        ListItemHoroscopeBinding binding = ListItemHoroscopeBinding.inflate(inflater, parent, false);
+        return new ViewHolder(binding, listener);
     }
 
     @Override
@@ -31,23 +35,40 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         return list.size();
     }
 
-    public void setList(ArrayList<HomeListData> list) {
+    public void setList(ArrayList<Horoscope> list) {
         this.list.clear();
         this.list.addAll(list);
         notifyDataSetChanged();
     }
 
+    public void setListener(@Nullable Listener listener) {
+        this.listener = listener;
+        notifyDataSetChanged();// LİSTEYİ GÜNCELLER!
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ListItemHoroscopeBinding binding;
+        @Nullable
+        private final Listener listener;
 
-        public ViewHolder(ListItemHoroscopeBinding binding ) {
+        public ViewHolder(ListItemHoroscopeBinding binding, @Nullable Listener listener) {
             super(binding.getRoot());
             this.binding = binding;
+            this.listener = listener;
         }
 
-        public void bind(HomeListData data) {
+        public void bind(Horoscope data) {
             binding.tvTitle.setText(data.getName());
             binding.imageView.setImageResource(data.getDrawableId());
+            binding.getRoot().setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onItemClick(data);
+                }
+            });
         }
+    }
+
+    public interface Listener {
+        void onItemClick(Horoscope data);
     }
 }
